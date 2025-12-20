@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/IT_graph_solve_pyside6.iml" filepath="$PROJECT_DIR$/.idea/IT_graph_solve_pyside6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IT_graph_solver_pyside6.iml" filepath="$PROJECT_DIR$/.idea/IT_graph_solver_pyside6.iml" />
     </modules>
   </component>
 </project>
