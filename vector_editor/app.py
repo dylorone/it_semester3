@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QFrame, QPushButton, QVBoxLayout, QApplication, QWidget
-
+import qdarktheme
 
 class VectorEditorWindow(QMainWindow):
     def __init__(self):
@@ -20,7 +20,6 @@ class VectorEditorWindow(QMainWindow):
 
         tools_panel = QFrame()
         tools_panel.setFixedWidth(120)  # Фиксируем ширину
-        tools_panel.setStyleSheet("background-color: #f0f0f0;")  # Временный цвет для наглядности
 
         # Внутри панели кнопки идут вертикально
         tools_layout = QVBoxLayout(tools_panel)
@@ -30,7 +29,6 @@ class VectorEditorWindow(QMainWindow):
         tools_layout.addStretch()  # Пружина, которая прижмет кнопки наверх
 
         canvas_placeholder = QFrame()
-        canvas_placeholder.setStyleSheet("background-color: white;")
 
         main_layout.addWidget(tools_panel)
         main_layout.addWidget(canvas_placeholder)
@@ -40,6 +38,8 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     window = VectorEditorWindow()
+    app.setStyleSheet(qdarktheme.load_stylesheet("dark"))
+
     window.show()
 
     sys.exit(app.exec())
