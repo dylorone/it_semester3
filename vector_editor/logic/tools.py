@@ -29,7 +29,6 @@ class CreationTool(Tool):
         self.start_point = None
         self.active_shape = None
 
-
     def mouse_press(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.start_point = self.view.mapToScene(event.pos())
@@ -53,8 +52,6 @@ class CreationTool(Tool):
 
     def mouse_release(self, event):
         if self.active_shape and event.button() == Qt.MouseButton.LeftButton:
-
-
             self.scene.removeItem(self.active_shape)
 
             end_point = self.view.mapToScene(event.pos())
@@ -85,7 +82,6 @@ class SelectionTool(Tool):
         self.start_positions = {}
 
     def mouse_press(self, event):
-
         QGraphicsView.mousePressEvent(self.view, event)
 
         item = self.view.itemAt(event.pos())

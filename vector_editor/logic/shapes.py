@@ -97,6 +97,7 @@ class Rectangle(Shape):
         super().__init__(color)
         self.update_data(x, y, w, h)
 
+    @property
     def type_name(self) -> str:
         return "rect"
 

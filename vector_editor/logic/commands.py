@@ -15,7 +15,6 @@ class AddShapeCommand(QUndoCommand):
         self.setText(f"Add {name}")
 
     def redo(self):
-
         if self.item.scene() != self.scene:
             self.scene.addItem(self.item)
 
