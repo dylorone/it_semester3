@@ -6,7 +6,6 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
 from PySide6.QtGui import QPainter, QPen, QBrush, QColor, QFont
 from PySide6.QtCore import Qt, QRectF
 
-# --- ЯДРО SOLVER ---
 class ShrinkSolver:
     def __init__(self):
         self.segments = {}
@@ -29,8 +28,7 @@ class ShrinkSolver:
     def parse_input(self, segments_text):
         self.segments = {}
         clean_seg_text = self.clean_text(segments_text)
-        
-        # Улучшенная регулярка: допускает пробелы везде (напр. [ 10 ; 20 ])
+
         pattern = re.compile(r'([A-Za-z]+)\s*=\s*\[\s*(\d+)\s*[;,]\s*(\d+)\s*\]')
         
         all_coords = []
@@ -140,8 +138,6 @@ class ShrinkSolver:
         except Exception as e:
             return f"Ошибка выполнения: {e}", 0, None
 
-# --- ВИЗУАЛИЗАЦИЯ ---
-
 class Visualizer(QWidget):
     def __init__(self):
         super().__init__()
@@ -217,12 +213,10 @@ class Visualizer(QWidget):
             painter.drawText(rect, Qt.AlignCenter, f"A [{s}; {e}]")
 
 
-# --- ГЛАВНОЕ ОКНО ---
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Солвер ЕГЭ №15 (Fix Unicode)")
+        self.setWindowTitle("Солвер ЕГЭ №15")
         self.resize(750, 550)
         
         self.solver = ShrinkSolver()

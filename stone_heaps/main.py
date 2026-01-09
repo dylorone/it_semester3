@@ -13,8 +13,7 @@ class StoneHeapsSolver(QMainWindow):
         super().__init__()
         self.setWindowTitle("Солвер задач ЕГЭ 19-21: Каменные кучи")
         self.setGeometry(100, 100, 1000, 700)
-        
-        
+
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         
