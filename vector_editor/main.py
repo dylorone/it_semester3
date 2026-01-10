@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QApplication
 from app import VectorEditorWindow
 import qdarktheme
 
+
 def main():
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarktheme.load_stylesheet())

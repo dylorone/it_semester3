@@ -57,3 +57,9 @@ vector_editor/
 ├── app.py                                 # Основоной layout приложения
 └── main.py                                # Точка входа
 ```
+
+## Сборка .exe
+Для сборки exe файла используется PyInstaller:
+```commandline
+pyinstaller --noconfirm -wFn "Vector Editor" .\main.py
+```

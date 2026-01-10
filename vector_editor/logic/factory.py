@@ -28,7 +28,7 @@ class ShapeFactory:
             return Line(x1, y1, x2, y2, color)
 
         else:
-            return None
+            raise ValueError("Unknown shape type")
 
     @staticmethod
     def from_dict(data: dict):
@@ -85,8 +85,6 @@ class ShapeFactory:
             child_item = ShapeFactory.from_dict(child_dict)
 
             if child_item:
-
-
                 saved_pos = child_item.pos()
                 child_item.setPos(0, 0)
 

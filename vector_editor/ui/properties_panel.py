@@ -1,13 +1,17 @@
+from PySide6.QtGui import QUndoStack
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
                                QSpinBox, QDoubleSpinBox, QPushButton,
                                QColorDialog, QFrame)
 from PySide6.QtCore import Qt
 
+from logic.commands import ChangeWidthCommand, ChangeColorCommand
+
 
 class PropertiesPanel(QFrame):
-    def __init__(self, scene, parent=None):
+    def __init__(self, scene, undo_stack: QUndoStack, parent=None):
         super().__init__(parent)
         self.scene = scene
+        self.undo_stack = undo_stack
         self.setFixedWidth(220)
 
         self._init_ui()
@@ -56,7 +60,6 @@ class PropertiesPanel(QFrame):
 
         layout.addStretch()
         self.setEnabled(False)
-
 
     def on_selection_changed(self):
         selected = self.scene.selectedItems()
@@ -123,9 +126,10 @@ class PropertiesPanel(QFrame):
         self.spin_width.setStyleSheet("")
         self.spin_width.blockSignals(False)
 
-
-
     def on_geo_changed(self, value):
+        if not self.scene.selectedItems():
+            return
+
         new_x = self.spin_x.value()
         new_y = self.spin_y.value()
 
@@ -133,15 +137,29 @@ class PropertiesPanel(QFrame):
             item.setPos(new_x, new_y)
 
     def on_width_changed(self, value):
+        if not self.scene.selectedItems():
+            return
+
+        self.undo_stack.beginMacro("Change width of selected")
         for item in self.scene.selectedItems():
             if hasattr(item, "set_pen_width"):
-                item.set_pen_width(value)
+                self.undo_stack.push(ChangeWidthCommand(item, value))
+
+        self.undo_stack.endMacro()
+        self.scene.update()
 
     def on_pick_color(self):
         color = QColorDialog.getColor()
-        if color.isValid():
-            hex_color = color.name()
-            self.btn_color.setStyleSheet(f"background-color: {hex_color}; border: 1px solid #aaa;")
-            for item in self.scene.selectedItems():
-                if hasattr(item, "set_active_color"):
-                    item.set_active_color(hex_color)
+        if not color.isValid():
+            return
+
+        hex_color = color.name()
+        self.btn_color.setStyleSheet(f"background-color: {hex_color}; border: 1px solid #aaa;")
+
+        self.undo_stack.beginMacro("Change color of selected")
+        for item in self.scene.selectedItems():
+            if hasattr(item, "set_active_color"):
+                self.undo_stack.push(ChangeColorCommand(item, hex_color))
+
+        self.undo_stack.endMacro()
+        self.scene.update()

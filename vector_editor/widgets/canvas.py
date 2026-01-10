@@ -51,7 +51,6 @@ class EditorCanvas(QGraphicsView):
     def set_color(self, color_hex):
         self.current_color = color_hex
 
-
     def mousePressEvent(self, event):
         self.active_tool.mouse_press(event)
 

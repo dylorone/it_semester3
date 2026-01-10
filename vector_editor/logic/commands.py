@@ -1,4 +1,8 @@
+from operator import itemgetter
+
 from PySide6.QtGui import QUndoCommand
+
+from logic.shapes import Shape
 
 
 class AddShapeCommand(QUndoCommand):
@@ -20,6 +24,7 @@ class AddShapeCommand(QUndoCommand):
 
     def undo(self):
         self.scene.removeItem(self.item)
+
 
 class MoveCommand(QUndoCommand):
     def __init__(self, item, old_pos, new_pos):
@@ -48,3 +53,41 @@ class DeleteCommand(QUndoCommand):
 
     def undo(self):
         self.scene.addItem(self.item)
+
+class ChangeColorCommand(QUndoCommand):
+    def __init__(self, item: Shape, new_color):
+        super().__init__()
+        self.item = item
+        self.new_color = new_color
+
+        if hasattr(item, "pen"):
+            self.old_color = item.pen().color().name()
+        else:
+            self.old_color = "#00000000"
+
+        self.setText(f"Change color to {self.new_color}")
+
+    def redo(self):
+        self.item.set_active_color(self.new_color)
+
+    def undo(self):
+        self.item.set_active_color(self.old_color)
+
+class ChangeWidthCommand(QUndoCommand):
+    def __init__(self, item: Shape, new_width):
+        super().__init__()
+        self.item = item
+        self.new_width = new_width
+
+        if hasattr(item, "pen"):
+            self.old_width = item.pen().width()
+        else:
+            self.old_width = 0
+
+        self.setText(f"Change width to {self.new_width}")
+
+    def redo(self):
+        self.item.set_pen_width(self.new_width)
+
+    def undo(self):
+        self.item.set_pen_width(self.old_width)

@@ -90,13 +90,12 @@ class VectorEditorWindow(QMainWindow):
         self.tool_panel = ToolPanel()
         self.canvas = EditorCanvas()
 
-        self.props_panel = PropertiesPanel(self.canvas.scene)
+        self.props_panel = PropertiesPanel(self.canvas.scene, self.canvas.undo_stack)
 
         main_layout.addWidget(self.tool_panel)
         main_layout.addWidget(self.canvas)
 
         main_layout.addWidget(self.props_panel)
-
 
     def _connect_signals(self):
         """Здесь мы подписываемся на события кнопок из панели инструментов"""
@@ -229,7 +228,6 @@ class VectorEditorWindow(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Ошибка сохранения", str(e))
 
-
     def load_project(self):
         filename, _ = QFileDialog.getOpenFileName(
             self, "Open Project", "", "Vector Files (*.json *.vec)"
@@ -256,7 +254,6 @@ class VectorEditorWindow(QMainWindow):
         shapes_list = project_data.get("shapes", [])
         error_count = 0
 
-
         for shape_dict in shapes_list:
             try:
                 item = ShapeFactory.from_dict(shape_dict)
@@ -265,7 +262,6 @@ class VectorEditorWindow(QMainWindow):
             except Exception as e:
                 print(f"Failed to load item: {e}")
                 error_count += 1
-
 
         msg = f"Проект загружен: {filename}"
         if error_count > 0:

@@ -74,6 +74,7 @@ class CreationTool(Tool):
             self.active_shape = None
             self.start_point = None
 
+
 class SelectionTool(Tool):
     def __init__(self, view, undo_stack):
         super().__init__(view)
@@ -110,7 +111,6 @@ class SelectionTool(Tool):
             self.view.setCursor(Qt.CursorShape.OpenHandCursor)
         else:
             self.view.setCursor(Qt.CursorShape.ArrowCursor)
-
 
         moved_items = []
         for item, old_pos in self.start_positions.items():

@@ -91,7 +91,6 @@ class Group(QGraphicsItemGroup, ShapeMixin):
                 child.set_pen_width(width)
 
 
-
 class Rectangle(Shape):
     def __init__(self, x=0, y=0, w=0, h=0, color="black"):
         super().__init__(color)
@@ -171,7 +170,6 @@ class Line(Shape):
         self.update_data(x1, y1, x2, y2)
 
     def update_data(self, x1, y1, x2, y2):
-
         local_x2 = x2 - x1
         local_y2 = y2 - y1
 
